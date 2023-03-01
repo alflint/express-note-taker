@@ -49,9 +49,12 @@ app.post('/api/notes', (req, res) =>{
 app.delete('/api/notes/:id', (req, res) => {
   const { id } = req.params;
   let notes = JSON.parse(fs.readFileSync("db/db.json"))
+
+  // GET all the notes where note.id is not equal to the id passed in the request
   notes = notes.filter(function( obj ) {
       return obj.id !== id;
   });
+
   fs.writeFile('db/db.json', JSON.stringify(notes), (err) => {
     if(err){
       console.log(`Unable to save to DB: ${err}`);
